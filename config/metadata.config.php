@@ -11,7 +11,7 @@
 return array(
     'name'    => 'Login history',
     'version' => 'chiba.2.4.',
-    'i18n_file' => 'noviusos_login::metadata',
+    'i18n_file' => 'novius_loginhistory::metadata',
     'permission' => array(),
     'provider' => array(
         'name' => 'Novius OS',
@@ -20,5 +20,5 @@ return array(
         'application' => 'local',
         'extend_configuration' => false,
     ),
-    'namespace' => 'Nos\Login',
+    'namespace' => 'Novius\Loginhistory',
 );

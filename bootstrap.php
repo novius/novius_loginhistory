@@ -15,7 +15,7 @@ if (NOS_ENTRY_POINT != 'admin') {
 // On login success
 \Event::register('admin.loginSuccess', function () {
     $user = Session::user();
-    \Nos\Login\Model_Login::add('login', array(
+    \Novius\Loginhistory\Model_Login::add('login', array(
         'driver'    => 'nos',
         'method'    => 'form',
         'state'     => 'success',
@@ -26,7 +26,7 @@ if (NOS_ENTRY_POINT != 'admin') {
 
 // On login fail
 \Event::register('admin.loginFail', function () {
-    \Nos\Login\Model_Login::add('login', array(
+    \Novius\Loginhistory\Model_Login::add('login', array(
         'driver'    => 'nos',
         'method'    => 'form',
         'state'     => 'fail',
@@ -37,7 +37,7 @@ if (NOS_ENTRY_POINT != 'admin') {
 // On autologin success
 \Event::register('admin.loginSuccessWithCookie', function () {
     $user = Session::user();
-    \Nos\Login\Model_Login::add('login', array(
+    \Novius\Loginhistory\Model_Login::add('login', array(
         'driver'    => 'nos',
         'method'    => 'cookie',
         'state'     => 'success',
@@ -49,7 +49,7 @@ if (NOS_ENTRY_POINT != 'admin') {
 // On autologin fail
 \Event::register('admin.loginFailWithCookie', function () {
     $user = Session::user();
-    \Nos\Login\Model_Login::add('login', array(
+    \Novius\Loginhistory\Model_Login::add('login', array(
         'driver'    => 'nos',
         'method'    => 'cookie',
         'state'     => 'success',

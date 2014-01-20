@@ -8,7 +8,7 @@
  * @link http://www.novius-os.org
  */
 
-namespace Nos\Login\Migrations;
+namespace Novius\Loginhistory\Migrations;
 
 class Install extends \Nos\Migration
 {

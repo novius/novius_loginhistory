@@ -7,7 +7,7 @@
  * @link http://www.novius-os.org
  */
 
-CREATE TABLE IF NOT EXISTS `nos_login` (
+CREATE TABLE IF NOT EXISTS `novius_login_history` (
   `logi_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `logi_created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `logi_login` varchar(255) DEFAULT NULL,

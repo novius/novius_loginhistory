@@ -8,11 +8,11 @@
  * @link http://www.novius-os.org
  */
 
-namespace Nos\Login;
+namespace Novius\Loginhistory;
 
 class Model_Login extends \Nos\Orm\Model
 {
-    protected static $_table_name = 'nos_login';
+    protected static $_table_name = 'novius_login_history';
     protected static $_primary_key = array('logi_id');
 
     protected static $_properties = array(
@@ -108,7 +108,7 @@ class Model_Login extends \Nos\Orm\Model
      * @return mixed
      */
     protected static function getIp() {
-        $config = \Config::load('noviusos_login::config', true);
+        $config = \Config::load('novius_loginhistory::config', true);
         return \Fuel::value(\Arr::get($config, 'callback_ip'));
     }
 }
