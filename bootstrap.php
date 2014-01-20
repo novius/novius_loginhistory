@@ -48,12 +48,10 @@ if (NOS_ENTRY_POINT != 'admin') {
 
 // On autologin fail
 \Event::register('admin.loginFailWithCookie', function () {
-    $user = Session::user();
     \Novius\Loginhistory\Model_Login::add('login', array(
         'driver'    => 'nos',
         'method'    => 'cookie',
-        'state'     => 'success',
-        'login'     => $user->user_email,
-        'user_id'   => $user->user_id,
+        'state'     => 'fail',
+        'user_id'   => Cookie::get('logged_user_id'),
     ));
 });
