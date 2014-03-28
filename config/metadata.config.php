@@ -8,6 +8,17 @@
  * @link http://www.novius-os.org
  */
 
+$version = \Config::load('nos::version', true);
+if (\Str::starts_with(\Arr::get($version, 'fullname'), 'Chiba')) {
+    $extends = array(
+        'application' => 'local',
+        'extend_configuration' => false,
+    );
+} else {
+    $extends = array(
+        'local',
+    );
+}
 return array(
     'name'    => 'Login history',
     'version' => 'chiba.2.4.',
@@ -16,9 +27,6 @@ return array(
     'provider' => array(
         'name' => 'Novius OS',
     ),
-    'extends' => array(
-        'application' => 'local',
-        'extend_configuration' => false,
-    ),
+    'extends' => $extends,
     'namespace' => 'Novius\Loginhistory',
 );
