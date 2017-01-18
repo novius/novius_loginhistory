@@ -77,7 +77,7 @@ if (NOS_ENTRY_POINT != 'admin') {
             ),
         ))->count();
 
-        if ($failures >= \Arr::get($wait_failures_config, 'attempts', 3)) {
+        if ($failures >= \Arr::get($wait_failures_config, 'attempts', 10)) {
             $error = __('You failed to login too many times. Please wait before trying again.');
             if (\Input::is_ajax()) {
                 $controller->sendResponse(array('error' => $error));
