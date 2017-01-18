@@ -58,10 +58,11 @@ if (NOS_ENTRY_POINT != 'admin') {
 
 \Event::register_function('admin.beforeLogin', function ($params) {
     $controller = \Arr::get($params, 'controllerInstance');
-    $wait_failures_config = \Config::load('novius_loginhistory::wait_after_admin_login_failures', true);
+    $wait_failures_config = \Arr::get(\Config::load('novius_loginhistory::config', true), 'wait_after_admin_login_failures', []);
     $wait_failures_enabled = \Arr::get($wait_failures_config, 'enabled', true);
+    $callback_is_whitelisted = \Arr::get($wait_failures_config, 'is_whitelisted');
 
-    if ($wait_failures_enabled) {
+    if ($wait_failures_enabled && is_callable($callback_is_whitelisted) && !$callback_is_whitelisted()) {
         $time_from = \Date::forge()
             ->modify('-'.\Arr::get($wait_failures_config, 'time_to_wait', 300).' seconds')
             ->format('mysql');

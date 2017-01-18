@@ -22,5 +22,9 @@ return array(
         'attempts' => 10,
         // Time to wait (seconds)
         'time_to_wait' => 300,
+        // In case you need to setup a mechanism to whitelist someone
+        'is_whitelisted' => function() {
+            return false;
+        }
     ),
 );
