@@ -62,7 +62,7 @@ if (NOS_ENTRY_POINT != 'admin') {
     $wait_failures_enabled = \Arr::get($wait_failures_config, 'enabled', true);
     $callback_is_whitelisted = \Arr::get($wait_failures_config, 'is_whitelisted');
 
-    if ($wait_failures_enabled && is_callable($callback_is_whitelisted) && !$callback_is_whitelisted()) {
+    if ($wait_failures_enabled && (!is_callable($callback_is_whitelisted) || !$callback_is_whitelisted())) {
         $time_from = \Date::forge()
             ->modify('-'.\Arr::get($wait_failures_config, 'time_to_wait', 300).' seconds')
             ->format('mysql');
