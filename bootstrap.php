@@ -55,3 +55,47 @@ if (NOS_ENTRY_POINT != 'admin') {
         'user_id'   => Cookie::get('logged_user_id'),
     ));
 });
+
+\Event::register_function('admin.beforeLogin', function ($params) {
+    $controller = \Arr::get($params, 'controllerInstance');
+    $wait_failures_config = \Arr::get(\Config::load('novius_loginhistory::config', true), 'wait_after_admin_login_failures', []);
+    $wait_failures_enabled = \Arr::get($wait_failures_config, 'enabled', true);
+    $callback_is_whitelisted = \Arr::get($wait_failures_config, 'is_whitelisted');
+
+    if ($wait_failures_enabled && (!is_callable($callback_is_whitelisted) || !$callback_is_whitelisted())) {
+        $time_from = \Date::forge()
+            ->modify('-'.\Arr::get($wait_failures_config, 'time_to_wait', 300).' seconds')
+            ->format('mysql');
+
+        $failures = \Novius\Loginhistory\Model_Login::query(array(
+            'where' => array(
+                array('logi_created_at', '>=', $time_from),
+                'logi_driver' => 'nos',
+                'logi_state'  => 'fail',
+                'logi_action' => 'login',
+                'logi_ip'     => \NC::remoteIp(),
+            ),
+        ))->count();
+
+        if ($failures >= \Arr::get($wait_failures_config, 'attempts', 10)) {
+            $error = __('You failed to login too many times. Please wait before trying again.');
+            if (\Input::is_ajax()) {
+                $controller->sendResponse(array('error' => $error));
+            } else {
+                \Asset::add_path('static/novius-os/admin/novius-os/');
+                \Asset::css('login.css', array(), 'css');
+                $response = \Response::forge();
+                $controller->after($response);
+                $controller->template->set(array(
+                    'body' => \View::forge('admin/login', array(
+                        'error' => $error,
+                    ), false),
+                ), false, false);
+                $response->body($controller->template->render());
+                $response->set_status(403);
+                $response->send(true);
+            }
+            exit;
+        }
+    }
+});
