@@ -35,7 +35,7 @@ if (NOS_ENTRY_POINT != 'admin') {
 });
 
 // On autologin success
-\Event::register('admin.loginSuccessWithCookie', function () {
+\Event::register_function('admin.loginSuccessWithCookie', function ($params) {
     $user = \Arr::get((array) $params, 'user');
     \Novius\Loginhistory\Model_Login::add('login', array(
         'driver'    => 'nos',
