@@ -13,14 +13,14 @@ if (NOS_ENTRY_POINT != 'admin') {
 }
 
 // On login success
-\Event::register('admin.loginSuccess', function () {
-    $user = Session::user();
+\Event::register_function('admin.beforeLoginSuccess', function ($params) {
+    $user = \Arr::get((array) $params, 'user');
     \Novius\Loginhistory\Model_Login::add('login', array(
         'driver'    => 'nos',
         'method'    => 'form',
         'state'     => 'success',
-        'login'     => $user->user_email,
-        'user_id'   => $user->user_id,
+        'login'     => !empty($user) ? $user->user_email : null,
+        'user_id'   => !empty($user) ? $user->user_id : null,
     ));
 });
 
@@ -36,13 +36,13 @@ if (NOS_ENTRY_POINT != 'admin') {
 
 // On autologin success
 \Event::register('admin.loginSuccessWithCookie', function () {
-    $user = Session::user();
+    $user = \Arr::get((array) $params, 'user');
     \Novius\Loginhistory\Model_Login::add('login', array(
         'driver'    => 'nos',
         'method'    => 'cookie',
         'state'     => 'success',
-        'login'     => $user->user_email,
-        'user_id'   => $user->user_id,
+        'login'     => !empty($user) ? $user->user_email : null,
+        'user_id'   => !empty($user) ? $user->user_id : null,
     ));
 });
 
