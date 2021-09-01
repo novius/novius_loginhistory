@@ -14,9 +14,10 @@ use Fuel\Core\DB;
 
 class Task_Cleaning extends \Task
 {
+    protected static $title = 'Login history cleaning';
+
     /**
-     * Check if abonnements created in the last minutes have their $user->user_etat === ON
-     * and send mail to admins if not
+     * Clean log in login history older than a delay set in config
      * @return mixed
      */
     public function run()
