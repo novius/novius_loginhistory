@@ -13,6 +13,8 @@ return array(
         return Input::ip();
     },
 
+    'cleaning_task_delay' => '-1 year',
+
     /**
      * After login failures on the back-office, forces the user to wait X seconds before re-trying
      */
